@@ -1,6 +1,2 @@
-2026/05/07-20:48:22.157 450 Reusing MANIFEST D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\Local Storage\leveldb/MANIFEST-000001
-2026/05/07-20:48:22.163 450 Recovering log #4
-2026/05/07-20:48:22.165 450 Reusing old log D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\Local Storage\leveldb/000004.log 
-2026/05/07-20:48:47.867 3a34 Level-0 table #8: started
-2026/05/07-20:48:47.870 3a34 Level-0 table #8: 19695 bytes OK
-2026/05/07-20:48:47.873 3a34 Delete type=0 #4
+2026/05/08-01:59:10.859 3260 Creating DB D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\Local Storage\leveldb since it was missing.
+2026/05/08-01:59:10.894 3260 Reusing MANIFEST D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\Local Storage\leveldb/MANIFEST-000001

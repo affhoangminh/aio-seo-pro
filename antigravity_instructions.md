@@ -28,16 +28,17 @@ Hệ thống sử dụng tầng Inject JavaScript (`anti_detect_engine.py`) đ�
 - **HTTP/2**: Luôn bật HTTP/2 để tận dụng khả năng tải dữ liệu song song, giúp tốc độ tải trang nhanh gấp 2-3 lần.
 - **Resource Blocking**: Hỗ trợ cơ chế chặn Image/Media/Font (tùy chọn) để tiết kiệm băng thông Proxy.
 
-## 4. Cơ chế Bot & Multi-tab
+## 4. Cơ chế Bot & Hành vi tự nhiên
 
-### Xoay vòng Tab (Tab Rotation)
-- **Logic**: Chương trình có khả năng mở nhiều Tab cùng lúc và thực hiện xoay vòng (`bring_to_front`).
-- **Human Behavior**: Sau mỗi lần chuyển Tab, Bot thực hiện cuộn trang (`mouse.wheel`) và nghỉ ngơi (`random_sleep`) để giả lập hành vi đa nhiệm của người dùng thật.
+### Chế độ Bot (Bot Mode)
+- **Tích hợp UI**: Hệ thống phân tách rõ ràng giữa chế độ duyệt web thủ công (Nút "Mở") và chế độ tự động hóa (Nút "Chạy Traffic Bot").
+- **Dwell Time (Đọc hiểu)**: Hàm `simulate_reading()` giữ bot ở lại trang đích một cách ngẫu nhiên (ví dụ 1-3 phút). Trong lúc đó, bot liên tục cuộn trang và có xác suất (30%) bôi đen (highlight) văn bản như đang đọc để vượt qua các bộ lọc Heatmap/Dwell Time khắt khe nhất.
+- **Bounce Rate (Tỷ lệ thoát)**: Hàm `simulate_bounce()` chiếm 20% xác suất trong phiên, giả lập người dùng chỉ vào trang vài giây, cuộn 1-2 lần rồi thoát ngay, giúp chỉ số Google Analytics trông tự nhiên.
 
 ### Điều khiển chuột (Mouse AI)
 - Di chuyển chuột theo quỹ đạo bước (steps) với tốc độ biến thiên, không di chuyển tức thời theo đường thẳng.
 
-## 5. Quản lý dữ liệu (Data Management)
+### Quản lý phiên (Session Management)
 
 - **Cookie Isolation**: Mỗi Profile lưu dữ liệu trong một thư mục riêng (`browser_profiles/profile_ID`).
 - **Persistence**: Tự động lưu Cookie khi trình duyệt đóng và nạp lại khi khởi động để duy trì trạng thái đăng nhập.
@@ -75,6 +76,7 @@ AI đánh giá dựa trên **Chất lượng dữ liệu** và **Độ uy tín (
 ### Giai đoạn 1: Hoàn thiện Lõi (Core)
 - [x] Tối ưu hóa Anti-detect engine (WebRTC, Canvas, WebGL, Screen Resolution).
 - [x] Tối ưu hiệu suất luồng, tự động hóa tương tác cơ bản (chuột, cuộn, click).
+- [x] Xây dựng cơ chế Dwell Time (Mô phỏng đọc) và Bounce Rate tự nhiên.
 - [ ] Tích hợp API cho các nhà cung cấp Proxy dân cư (Residential Proxies) chất lượng cao.
 
 ### Giai đoạn 2: Tự động hóa Nội dung & Seeding
@@ -87,4 +89,4 @@ AI đánh giá dựa trên **Chất lượng dữ liệu** và **Độ uy tín (
 - [ ] Quét và đánh giá cấu trúc dữ liệu (Schema.org, JSON-LD) của trang web mục tiêu để đảm bảo chuẩn "thức ăn" cho AI.
 
 ---
-*Cập nhật lần cuối: 07/05/2026 bởi Antigravity*
+*Cập nhật lần cuối: 08/05/2026 bởi Antigravity*

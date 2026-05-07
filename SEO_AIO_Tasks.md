@@ -6,9 +6,9 @@ Dưới đây là danh sách chi tiết các công việc cần thực hiện đ
 **Mục tiêu:** Làm cho Bot hành xử không thể phân biệt được với người thật.
 
 ### 1.1. Hành vi "Đọc hiểu" (Dwell Time & Bounce Rate)
-- [ ] Tích hợp hàm `simulate_reading()` trong `bot/page_actions.py` để bot ở lại trang 3-5 phút.
-- [ ] Giả lập hành vi bôi đen văn bản ngẫu nhiên khi đang đọc.
-- [ ] Tích hợp hàm `simulate_bounce()` với tỷ lệ thoát trang nhanh (20%) để tự nhiên hóa chỉ số Google Analytics.
+- [x] Tích hợp hàm `simulate_reading()` trong `bot/page_actions.py` để bot ở lại trang 3-5 phút.
+- [x] Giả lập hành vi bôi đen văn bản ngẫu nhiên khi đang đọc.
+- [x] Tích hợp hàm `simulate_bounce()` với tỷ lệ thoát trang nhanh (20%) để tự nhiên hóa chỉ số Google Analytics.
 
 ### 1.2. Mô phỏng "Hành trình khách hàng" (Customer Journey)
 - [ ] Cập nhật `bot/google_search_bot.py` để nhận danh sách từ khóa phụ.

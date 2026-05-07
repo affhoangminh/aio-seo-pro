@@ -1,2 +1,5 @@
-2026/05/07-20:48:58.818 a58 Creating DB D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\File System\Origins since it was missing.
-2026/05/07-20:48:58.821 a58 Reusing MANIFEST D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\File System\Origins/MANIFEST-000001
+2026/05/08-01:59:13.491 321c Log #3: 3 ops saved to Table #4 OK
+2026/05/08-01:59:13.491 321c Archiving D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\File System\Origins/000003.log: OK
+2026/05/08-01:59:13.491 321c Table #4: 3 entries OK
+2026/05/08-01:59:13.492 321c Archiving D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\File System\Origins/MANIFEST-000001: OK
+2026/05/08-01:59:13.495 321c **** Repaired leveldb D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\File System\Origins; recovered 1 files; 184 bytes. Some data may have been lost. ****

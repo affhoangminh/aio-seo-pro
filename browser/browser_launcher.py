@@ -101,7 +101,7 @@ def parse_fingerprint(fingerprint_data):
 # LAUNCH BROWSER
 # ==========================
 
-def launch_browser(profile):
+def launch_browser(profile, bot_mode=False):
 
     profile_id = profile[0]
     proxy_string = profile[2]
@@ -123,8 +123,6 @@ def launch_browser(profile):
         playwright_inst, chromium = start_playwright()
 
         context = chromium.launch_persistent_context(
-
-            executable_path=CHROME_PATH,
 
             user_data_dir=profile_path,
 
@@ -170,44 +168,18 @@ def launch_browser(profile):
         start = time.time()
 
         # ==========================
-        # MULTI-TAB ROTATION
+        # BOT MODE OR MANUAL
         # ==========================
         
-        print("Opening multiple tabs...")
-        pages = []
-        
-        # Mở 3 tab với các trang khác nhau
-        targets = [
-            ("https://google.com", "Google"),
-            ("https://bing.com", "Bing"),
-            ("https://wikipedia.org", "Wikipedia")
-        ]
-
-        for url, name in targets:
-            try:
-                new_page = context.new_page()
-                print(f"Opening tab: {name}")
-                # Đổi sang domcontentloaded để không bị xoay vòng mãi mãi
-                new_page.goto(url, wait_until="domcontentloaded", timeout=30000)
-                pages.append(new_page)
-                time.sleep(2)
-            except Exception as e:
-                print(f"Failed to open {name}: {e}")
-
-        # Xoay vòng giữa các tab
-        if pages:
-            for i in range(2): # Xoay vòng 2 vòng
-                for idx, p in enumerate(pages):
-                    print(f"Switching to tab {idx+1}")
-                    p.bring_to_front()
-                    time.sleep(3)
-                    # Thực hiện hành động cuộn trang nhẹ
-                    p.mouse.wheel(0, 300)
-        
-        print("Tab rotation finished.")
         end = time.time()
+        print("Browser started successfully in:", round(end - start, 2), "seconds")
 
-        print("Page loaded in:", round(end - start, 2), "seconds")
+        if bot_mode:
+            print("Bot mode activated. Running traffic bot...")
+            try:
+                run_traffic_bot(page)
+            except Exception as e:
+                print("Traffic Bot Error:", e)
         print("Browser started successfully")
 
         def on_close():

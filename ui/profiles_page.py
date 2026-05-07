@@ -32,17 +32,20 @@ class ProfilesPage(QWidget):
         self.btn_edit = QPushButton("Sửa")
         self.btn_delete = QPushButton("Xóa")
         self.btn_open = QPushButton("Mở")
+        self.btn_run_bot = QPushButton("Chạy Traffic Bot")
 
         self.btn_add.clicked.connect(self.add_profile)
         self.btn_edit.clicked.connect(self.edit_profile)
         self.btn_delete.clicked.connect(self.delete_profile)
-        self.btn_open.clicked.connect(self.open_profiles)
+        self.btn_open.clicked.connect(lambda: self.open_profiles(bot_mode=False))
+        self.btn_run_bot.clicked.connect(lambda: self.open_profiles(bot_mode=True))
 
         toolbar.addWidget(self.btn_add)
         toolbar.addWidget(self.btn_import)
         toolbar.addWidget(self.btn_edit)
         toolbar.addWidget(self.btn_delete)
         toolbar.addWidget(self.btn_open)
+        toolbar.addWidget(self.btn_run_bot)
         toolbar.addStretch()
 
         # =========================
@@ -154,7 +157,7 @@ class ProfilesPage(QWidget):
     # OPEN MULTIPLE PROFILES
     # =========================
 
-    def open_profiles(self):
+    def open_profiles(self, bot_mode=False):
 
         selected_rows = self.table.selectionModel().selectedRows()
 
@@ -197,4 +200,4 @@ class ProfilesPage(QWidget):
 
             from browser.browser_worker import add_task
 
-            add_task(launch_browser, profile)
+            add_task(launch_browser, profile, bot_mode)
