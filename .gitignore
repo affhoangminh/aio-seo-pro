@@ -1,8 +1,9 @@
 venv/
 __pycache__/
 *.pyc
-browser_profiles/
-cookies/
-database/*.db
+# browser_profiles/
+# cookies/
+# database/*.db
 chromium/
 .DS_Store
+browser_profiles

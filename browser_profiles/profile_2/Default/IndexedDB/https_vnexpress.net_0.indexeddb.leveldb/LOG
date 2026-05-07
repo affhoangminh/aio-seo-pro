@@ -1,0 +1,24 @@
+2026/05/07-20:52:57.414 1548 Reusing MANIFEST D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\IndexedDB\https_vnexpress.net_0.indexeddb.leveldb/MANIFEST-000001
+2026/05/07-20:52:57.414 1548 Recovering log #28
+2026/05/07-20:52:57.414 1548 Reusing old log D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_2\Default\IndexedDB\https_vnexpress.net_0.indexeddb.leveldb/000028.log 
+2026/05/07-20:52:57.440 28ec Level-0 table #32: started
+2026/05/07-20:52:57.442 28ec Level-0 table #32: 651 bytes OK
+2026/05/07-20:52:57.443 28ec Delete type=0 #28
+2026/05/07-20:52:57.443 1c0c Manual compaction at level-0 from '\x00\x0b\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0c\x00\x00\x00' @ 0 : 0; will stop at '\x00\x0b\x00\x00\x05' @ 232 : 1
+2026/05/07-20:52:57.443 1c0c Compacting 1@0 + 1@1 files
+2026/05/07-20:52:57.445 1c0c Generated table #33@0: 7 keys, 615 bytes
+2026/05/07-20:52:57.445 1c0c Compacted 1@0 + 1@1 files => 615 bytes
+2026/05/07-20:52:57.445 1c0c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/05/07-20:52:57.446 1c0c Delete type=2 #32
+2026/05/07-20:52:57.446 1c0c Manual compaction at level-0 from '\x00\x0b\x00\x00\x05' @ 232 : 1 .. '\x00\x0c\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/05/07-20:52:58.034 1c0c Level-0 table #35: started
+2026/05/07-20:52:58.036 1c0c Level-0 table #35: 661 bytes OK
+2026/05/07-20:52:58.037 1c0c Delete type=2 #29
+2026/05/07-20:52:58.037 1c0c Delete type=0 #31
+2026/05/07-20:52:58.037 1c0c Manual compaction at level-0 from '\x00\x0c\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0d\x00\x00\x00' @ 0 : 0; will stop at '\x00\x0c\x00\x00\x05' @ 251 : 1
+2026/05/07-20:52:58.037 1c0c Compacting 1@0 + 1@1 files
+2026/05/07-20:52:58.039 1c0c Generated table #36@0: 11 keys, 637 bytes
+2026/05/07-20:52:58.039 1c0c Compacted 1@0 + 1@1 files => 637 bytes
+2026/05/07-20:52:58.040 1c0c compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/05/07-20:52:58.040 1c0c Delete type=2 #35
+2026/05/07-20:52:58.040 1c0c Manual compaction at level-0 from '\x00\x0c\x00\x00\x05' @ 251 : 1 .. '\x00\x0d\x00\x00\x00' @ 0 : 0; will stop at (end)
