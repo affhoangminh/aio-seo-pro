@@ -17,9 +17,14 @@ Hệ thống sử dụng tầng Inject JavaScript (`anti_detect_engine.py`) đ�
 - **Vô hiệu hóa WebRTC**: Chặn các hàm `RTCPeerConnection` để ngăn Google/Facebook phát hiện địa chỉ IP thật của máy (IP Leak) đằng sau Proxy.
 
 ### Đồng bộ hóa Fingerprint
-- **Canvas Noise**: Thêm nhiễu ngẫu nhiên vào dữ liệu điểm ảnh (Pixel data) của Canvas. Mỗi Profile có một mã nhiễu riêng (`canvas_noise`).
-- **WebGL Spoofing**: Giả lập Card đồ họa (Vendor/Renderer) theo đúng cấu hình Profile (ví dụ: NVIDIA, Intel, AMD).
 - **Screen Consistency**: Ép các thông số `screen.width`, `window.innerWidth` phải khớp chính xác với độ phân giải giả lập, tránh bị phát hiện do sự lệch lạc thông số.
+
+### 2.1. Trình duyệt "Thật 100%" (Stealth Browser)
+Để vượt qua lớp bảo mật "Browser not secure" của Google:
+- **Executable Path**: Hệ thống tự động tìm và sử dụng tệp `chrome.exe` chính chủ được cài đặt trên máy thay vì Chromium đi kèm.
+- **Hide Automation Flags**: Loại bỏ cờ `--enable-automation` và sử dụng `--disable-blink-features=AutomationControlled` để xóa bỏ thuộc tính `navigator.webdriver`.
+- **User Data Persistence**: Giữ nguyên toàn bộ lịch sử, cache và trạng thái đăng nhập như một trình duyệt thông thường.
+
 
 ## 3. Tối ưu hóa hiệu suất (Performance Optimization)
 
@@ -40,8 +45,45 @@ Hệ thống sử dụng tầng Inject JavaScript (`anti_detect_engine.py`) đ�
 
 ### Quản lý phiên (Session Management)
 
-- **Cookie Isolation**: Mỗi Profile lưu dữ liệu trong một thư mục riêng (`browser_profiles/profile_ID`).
 - **Persistence**: Tự động lưu Cookie khi trình duyệt đóng và nạp lại khi khởi động để duy trì trạng thái đăng nhập.
+
+### 4.1. Kỹ thuật giả lập con người (Human Simulation)
+- **Human-like Typing**: Sử dụng hàm `human_type()` để gõ từ khóa từng phím một với tốc độ và khoảng nghỉ ngẫu nhiên, mô phỏng hành vi suy nghĩ khi gõ của người thật.
+- **Modern Pagination**: Hỗ trợ đồng thời cả nút "Next" (đa ngôn ngữ Anh/Việt) và cơ chế **Continuous Scroll** (Cuộn vô tận) mới của Google.
+- **Captcha Handling**: Cơ chế `check_captcha()` tự động phát hiện màn hình xác minh và tạm dừng kịch bản, chờ người dùng giải tay trên trình duyệt trước khi tự động chạy tiếp.
+
+
+## 5. Hệ thống Kịch bản (Scripting Engine)
+
+Hệ thống cho phép chạy bot theo các kịch bản tùy chỉnh thay vì chỉ chạy ngẫu nhiên.
+
+### Cấu trúc kịch bản (JSON)
+Mỗi kịch bản là một mảng các bước hành động:
+- `search_google`: `{ "type": "search_google", "keyword": "..." }`
+- `click_domain`: `{ "type": "click_domain", "domain": "...", "max_pages": 5 }`
+- `goto`: `{ "type": "goto", "url": "..." }`
+- `simulate_reading`: `{ "type": "simulate_reading", "min": 60, "max": 180 }`
+- `scroll`: `{ "type": "scroll" }`
+- `click_internal`: `{ "type": "click_internal", "count": 2 }`
+- `wait`: `{ "type": "wait", "seconds": 10 }`
+
+### Trình soạn thảo trực quan (Script Editor)
+Hệ thống cung cấp giao diện quản lý và soạn thảo kịch bản dành cho người không rành code:
+- **Tự động dịch JSON**: Hiển thị các bước dưới dạng ngôn ngữ tự nhiên (tiếng Việt).
+- **Kéo thả**: Hỗ trợ sắp xếp thứ tự các bước bằng thao tác kéo thả trong ListWidget.
+- **Form nhập liệu**: Điền thông số hành động thông qua các ô nhập liệu (LineEdit) thay vì viết code.
+
+### Giải quyết xung đột Asyncio (Technical Note)
+Để Playwright Sync API hoạt động ổn định trong môi trường PySide6/Qt (vốn có event loop ngầm), hệ thống sử dụng cơ chế:
+```python
+import asyncio
+def start_playwright():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    return sync_playwright().start()
+```
+Điều này đảm bảo mỗi luồng worker có một môi trường async sạch, tránh lỗi `Greenlet.switch()` hoặc `asyncio loop detection`.
+
 
 ## 6. Hướng dẫn thiết lập môi trường (Setup)
 
@@ -77,7 +119,10 @@ AI đánh giá dựa trên **Chất lượng dữ liệu** và **Độ uy tín (
 - [x] Tối ưu hóa Anti-detect engine (WebRTC, Canvas, WebGL, Screen Resolution).
 - [x] Tối ưu hiệu suất luồng, tự động hóa tương tác cơ bản (chuột, cuộn, click).
 - [x] Xây dựng cơ chế Dwell Time (Mô phỏng đọc) và Bounce Rate tự nhiên.
+- [x] **Phát triển Hệ thống Kịch bản (Scripting Engine) & Trình soạn thảo trực quan.**
+- [x] **Hiện đại hóa giao diện (Light Mode, Quản lý profile chuyên nghiệp).**
 - [ ] Tích hợp API cho các nhà cung cấp Proxy dân cư (Residential Proxies) chất lượng cao.
+
 
 ### Giai đoạn 2: Tự động hóa Nội dung & Seeding
 - [ ] Tích hợp API OpenAI (ChatGPT) / Google (Gemini) vào mã nguồn.

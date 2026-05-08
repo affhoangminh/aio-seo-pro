@@ -15,34 +15,52 @@ class ProxyPage(QWidget):
         super().__init__()
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(10, 10, 10, 10)
+        layout.setSpacing(15)
 
         # toolbar
         toolbar = QHBoxLayout()
+        toolbar.setSpacing(10)
 
-        self.btn_add = QPushButton("Thêm")
-        self.btn_import = QPushButton("Import")
-        self.btn_edit = QPushButton("Sửa")
-        self.btn_check = QPushButton("Check Proxy")
-        self.btn_delete = QPushButton("Xóa")
+        self.btn_add = QPushButton(" ➕ Thêm")
+        self.btn_add.setObjectName("ActionButton")
+        
+        self.btn_import = QPushButton(" 📥 Import")
+        self.btn_import.setObjectName("SecondaryButton")
+        
+        self.btn_edit = QPushButton(" 📝 Sửa")
+        self.btn_edit.setObjectName("SecondaryButton")
+        
+        self.btn_check = QPushButton(" ⚡ Check Proxy")
+        self.btn_check.setObjectName("ActionButton")
+        self.btn_check.setStyleSheet("background-color: #10b981;") # Green for success/check
+        
+        self.btn_delete = QPushButton(" 🗑️ Xóa")
+        self.btn_delete.setObjectName("DangerButton")
 
         toolbar.addWidget(self.btn_add)
         toolbar.addWidget(self.btn_import)
         toolbar.addWidget(self.btn_edit)
         toolbar.addWidget(self.btn_check)
-        toolbar.addWidget(self.btn_delete)
         toolbar.addStretch()
+        toolbar.addWidget(self.btn_delete)
 
         # table
         self.table = QTableWidget()
+        self.table.setAlternatingRowColors(True)
+        self.table.verticalHeader().setVisible(False)
+        self.table.setShowGrid(False)
         self.table.setColumnCount(7)
         self.table.setHorizontalHeaderLabels(
             ["ID","Host","Port","User","Password","Status","Speed"]
         )
+        self.table.horizontalHeader().setStretchLastSection(True)
 
         layout.addLayout(toolbar)
         layout.addWidget(self.table)
 
         self.setLayout(layout)
+
 
         # events
         self.btn_add.clicked.connect(self.add_proxy)

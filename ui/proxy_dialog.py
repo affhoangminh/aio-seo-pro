@@ -38,9 +38,11 @@ class ProxyDialog(QDialog):
         layout.addWidget(self.password)
 
         btn = QPushButton("Lưu")
+        btn.setObjectName("ActionButton")
         btn.clicked.connect(self.save)
 
         layout.addWidget(btn)
+
 
         self.setLayout(layout)
 

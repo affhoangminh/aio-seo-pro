@@ -7,9 +7,16 @@ from bot.page_actions import random_sleep
 from bot.mouse_ai import random_mouse_moves
 
 
-def run_traffic_bot(page):
+from bot.script_executor import execute_script
+
+def run_traffic_bot(page, script=None):
+    
+    if script:
+        execute_script(page, script)
+        return
 
     random_mouse_moves(page)
+
 
     # Giả lập 20% tỷ lệ Bounce Rate (thoát trang ngay)
     if random.random() < 0.20:

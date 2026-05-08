@@ -115,3 +115,151 @@ def click_random_internal(page):
 
     except:
         pass
+
+# ======================
+
+# GOTO URL
+# ======================
+
+def goto_url(page, url):
+    print(f"Truy cập URL: {url}")
+    page.goto(url, wait_until="domcontentloaded")
+    check_captcha(page)
+    random_sleep(2, 4)
+
+
+# ======================
+# HUMAN-LIKE TYPING
+# ======================
+
+def human_type(page, selector, text):
+    element = page.query_selector(selector)
+    if element:
+        element.click()
+        for char in text:
+            page.keyboard.type(char, delay=random.randint(50, 250))
+            if random.random() < 0.1: # 10% cơ hội dừng lại một chút như đang nghĩ
+                random_sleep(0.5, 1.5)
+
+# ======================
+# CHECK CAPTCHA
+# ======================
+
+def check_captcha(page):
+    captcha_indicators = [
+        "https://www.google.com/sorry/index",
+        "detected unusual traffic",
+        "recaptcha"
+    ]
+    
+    try:
+        current_url = page.url
+        # Kiểm tra qua URL trước cho nhanh
+        is_captcha = any(ind in current_url for ind in captcha_indicators)
+        
+        if not is_captcha:
+            # Nếu URL không rõ, kiểm tra nội dung trang
+            page_content = page.content().lower()
+            is_captcha = any(ind in page_content for ind in captcha_indicators)
+            
+        if is_captcha:
+            print("⚠️ CẢNH BÁO: Phát hiện Google CAPTCHA! Vui lòng giải tay trên trình duyệt để tiếp tục.")
+            while any(ind in page.url for ind in captcha_indicators):
+                time.sleep(5)
+            print("✅ CAPTCHA đã được giải. Tiếp tục kịch bản...")
+            return True
+    except:
+        pass
+    return False
+
+
+# ======================
+# SEARCH GOOGLE
+# ======================
+
+def search_google(page, keyword):
+    print(f"Tìm kiếm Google với từ khóa: {keyword}")
+    page.goto("https://www.google.com", wait_until="domcontentloaded")
+    random_sleep(2, 3)
+    
+    # Kiểm tra captcha ngay khi vào Google
+    check_captcha(page)
+    
+    # Tìm ô search (xử lý cả id và name)
+    search_selector = "textarea[name='q'], input[name='q']"
+    search_box = page.query_selector(search_selector)
+    
+    if search_box:
+        # Sử dụng human_type thay vì fill
+        human_type(page, search_selector, keyword)
+        random_sleep(1, 2)
+        page.keyboard.press("Enter")
+        page.wait_for_load_state("domcontentloaded")
+        
+        # Kiểm tra captcha sau khi search
+        check_captcha(page)
+        random_sleep(3, 5)
+
+
+# ======================
+# FIND AND CLICK DOMAIN IN GOOGLE
+# ======================
+
+def find_and_click_domain(page, domain, max_pages=10):
+    print(f"Tìm kiếm domain '{domain}' trong kết quả Google (Tối đa {max_pages} trang)...")
+    
+    for p in range(max_pages):
+        print(f"--- Đang quét trang {p+1} ---")
+        random_sleep(3, 5) # Đợi trang tải xong hẳn
+        
+        # Lấy tất cả các link <a>
+        links = page.query_selector_all("a")
+        
+        for link in links:
+            try:
+                href = link.get_attribute("href")
+                if href and domain in href:
+                    if "googleadservices" in href: continue
+                    
+                    print(f"🔥 Đã tìm thấy domain tại trang {p+1}. Đang click...")
+                    link.scroll_into_view_if_needed()
+                    random_sleep(1, 2)
+                    link.click()
+                    page.wait_for_load_state("domcontentloaded")
+                    return True
+            except:
+                continue
+        
+        # Tìm nút chuyển trang (Hỗ trợ cả Tiếng Anh và Tiếng Việt)
+        next_selectors = [
+            "#pnnext", 
+            "a[aria-label='Next page']", 
+            "a:has-text('Next')", 
+            "a:has-text('Tiếp')",
+            "a:has-text('Trang sau')"
+        ]
+        
+        next_btn = None
+        for sel in next_selectors:
+            next_btn = page.query_selector(sel)
+            if next_btn: break
+            
+        if next_btn:
+            print(f"Chuyển sang trang {p+2}...")
+            next_btn.scroll_into_view_if_needed()
+            random_sleep(1, 2)
+            next_btn.click()
+            page.wait_for_load_state("domcontentloaded")
+            check_captcha(page)
+        else:
+            # Nếu không thấy nút Next, thực hiện cuộn để kích hoạt Continuous Scroll (Google mới)
+            print("Không thấy nút chuyển trang, thử cuộn xuống cuối trang để tải thêm...")
+            page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+            random_sleep(4, 6)
+            check_captcha(page)
+
+
+
+            
+    print(f"Không tìm thấy domain '{domain}' sau {max_pages} trang.")
+    return False

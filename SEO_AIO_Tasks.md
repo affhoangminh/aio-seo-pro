@@ -10,17 +10,27 @@ Dưới đây là danh sách chi tiết các công việc cần thực hiện đ
 - [x] Giả lập hành vi bôi đen văn bản ngẫu nhiên khi đang đọc.
 - [x] Tích hợp hàm `simulate_bounce()` với tỷ lệ thoát trang nhanh (20%) để tự nhiên hóa chỉ số Google Analytics.
 
-### 1.2. Mô phỏng "Hành trình khách hàng" (Customer Journey)
-- [ ] Cập nhật `bot/google_search_bot.py` để nhận danh sách từ khóa phụ.
-- [ ] Cấu hình kịch bản: Tìm từ khóa phụ -> Click Top 3 đối thủ -> Quay lại Google -> Tìm từ khóa chính -> Click website của bạn.
+### 1.2. Hệ thống Kịch bản & Hành trình khách hàng (Evolved)
+- [x] Phát triển **Scripting Engine** hỗ trợ chuỗi hành động phức tạp.
+- [x] Tạo kịch bản mẫu: Tìm khóa phụ -> Click đối thủ -> Quay lại Google -> Tìm khóa chính -> Click website của bạn.
+- [x] Tích hợp **Trình soạn thảo Kịch bản Trực quan** cho người không rành code.
+
 
 ### 1.3. Tín hiệu Mạng Xã Hội (Social Signals)
 - [ ] Tạo module `bot/social_traffic_bot.py`.
 - [ ] Viết kịch bản tự động đăng nhập & lưu Session cho Facebook, Reddit, X (Twitter).
 - [ ] Kịch bản click link Referral từ mạng xã hội về website chính.
 
-### 1.4. Nâng cấp Anti-detect
+### 1.4. Nâng cấp Giao diện & Anti-detect (Completed)
+- [x] Chuyển đổi toàn bộ sang **Light Mode** hiện đại.
+- [x] Thêm cột **Kịch bản Bot** trong danh sách Profile để dễ quản lý.
+- [x] Thêm tính năng **Chọn tất cả (Select All)** để vận hành hàng loạt.
+- [x] **Stealth Browser**: Sử dụng Retail Chrome và ẩn cờ automation để vượt qua lớp bảo mật Google.
+- [x] **Human Typing**: Giả lập gõ phím và độ trễ biến thiên.
+- [x] **Captcha Detection**: Tự động phát hiện và tạm dừng chờ giải tay.
 - [ ] Hỗ trợ cấu hình tích hợp API xoay IP cho Proxy Dân cư (Residential Proxy).
+
+
 
 ---
 

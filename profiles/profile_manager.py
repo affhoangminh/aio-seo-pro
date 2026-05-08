@@ -19,9 +19,17 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         proxy_id INTEGER,
-        fingerprint TEXT
+        fingerprint TEXT,
+        script_path TEXT
     )
     """)
+    
+    # Cập nhật schema cho các DB cũ
+    try:
+        cur.execute("ALTER TABLE profiles ADD COLUMN script_path TEXT")
+    except:
+        pass
+
 
     # proxies table
     cur.execute("""
@@ -42,7 +50,7 @@ def init_db():
 # ADD PROFILE
 # ==========================
 
-def add_profile(name, proxy_id=None, fingerprint=None):
+def add_profile(name, proxy_id=None, fingerprint=None, script_path=None):
 
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
@@ -51,9 +59,11 @@ def add_profile(name, proxy_id=None, fingerprint=None):
         fingerprint = {}
 
     cur.execute("""
-    INSERT INTO profiles (name, proxy_id, fingerprint)
-    VALUES (?, ?, ?)
-    """, (name, proxy_id, json.dumps(fingerprint)))
+    INSERT INTO profiles (name, proxy_id, fingerprint, script_path)
+    VALUES (?, ?, ?, ?)
+    """, (name, proxy_id, json.dumps(fingerprint), script_path))
+
+
 
     conn.commit()
     conn.close()
@@ -75,11 +85,13 @@ def get_profiles():
         proxies.host,
         proxies.port,
         proxies.username,
-        proxies.password
+        proxies.password,
+        profiles.script_path
     FROM profiles
     LEFT JOIN proxies
     ON profiles.proxy_id = proxies.id
     """)
+
 
     rows = cur.fetchall()
 
@@ -92,16 +104,18 @@ def get_profiles():
 # UPDATE PROFILE
 # ==========================
 
-def update_profile(profile_id, name, proxy_id):
+def update_profile(profile_id, name, proxy_id, script_path=None):
+
 
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
 
     cur.execute("""
     UPDATE profiles
-    SET name=?, proxy_id=?
+    SET name=?, proxy_id=?, script_path=?
     WHERE id=?
-    """, (name, proxy_id, profile_id))
+    """, (name, proxy_id, script_path, profile_id))
+
 
     conn.commit()
     conn.close()
@@ -141,12 +155,14 @@ def get_profile(profile_id):
         proxies.host,
         proxies.port,
         proxies.username,
-        proxies.password
+        proxies.password,
+        profiles.script_path
     FROM profiles
     LEFT JOIN proxies
     ON profiles.proxy_id = proxies.id
     WHERE profiles.id=?
     """, (profile_id,))
+
 
     row = cur.fetchone()
 

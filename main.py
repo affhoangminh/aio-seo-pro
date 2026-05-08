@@ -67,10 +67,14 @@ def main():
     app = QApplication(sys.argv)
 
     # apply UI theme
+    from ui.styles import MAIN_STYLES
     apply_stylesheet(app, theme="light_blue.xml")
+    app.setStyleSheet(app.styleSheet() + MAIN_STYLES)
+
 
     # cleanup when closing
     app.aboutToQuit.connect(cleanup_async)
+
 
     # open main window
     window = MainWindow()

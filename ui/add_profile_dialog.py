@@ -27,10 +27,12 @@ class AddProfileDialog(QDialog):
         self.proxy_input = QLineEdit()
         layout.addWidget(self.proxy_input)
 
-        self.btn_save = QPushButton("Lưu")
+        self.btn_save = QPushButton(" 💾 Lưu")
+        self.btn_save.setObjectName("ActionButton")
         self.btn_save.clicked.connect(self.save_profile)
 
         layout.addWidget(self.btn_save)
+
 
         self.setLayout(layout)
 

@@ -1,0 +1,30 @@
+[
+    {
+        "keyword": "máy photocopy ricoh",
+        "type": "search_google"
+    },
+    {
+        "domain": "nhattienthanh.com",
+        "max_pages": 10,
+        "type": "click_domain"
+    },
+    {
+        "max": 120,
+        "min": 60,
+        "type": "simulate_reading"
+    },
+    {
+        "count": 2,
+        "type": "click_internal"
+    },
+    {
+        "type": "scroll"
+    },
+    {
+        "type": "mouse_move"
+    },
+    {
+        "seconds": 10,
+        "type": "wait"
+    }
+]

@@ -21,10 +21,12 @@ class ImportProxyDialog(QDialog):
         self.text = QTextEdit()
         layout.addWidget(self.text)
 
-        self.btn_import = QPushButton("Import")
+        self.btn_import = QPushButton(" 📥 Bắt đầu Import")
+        self.btn_import.setObjectName("ActionButton")
         self.btn_import.clicked.connect(self.import_proxies)
 
         layout.addWidget(self.btn_import)
+
 
         self.setLayout(layout)
 

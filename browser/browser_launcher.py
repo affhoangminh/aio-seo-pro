@@ -122,18 +122,36 @@ def launch_browser(profile, bot_mode=False):
 
         playwright_inst, chromium = start_playwright()
 
+        # Tìm đường dẫn Chrome thực tế trên Windows
+        chrome_paths = [
+            "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+            os.path.expanduser("~\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe")
+        ]
+        
+        executable_path = None
+        for path in chrome_paths:
+            if os.path.exists(path):
+                executable_path = path
+                break
+
+        # Cấu hình khởi chạy để giống người thật 100%
+        launch_args = [
+            "--disable-blink-features=AutomationControlled", # Quan trọng: Ẩn cờ tự động
+            "--no-sandbox",
+            "--disable-infobars", # Ẩn dòng "Chrome is being controlled by automated software"
+            "--window-position=0,0",
+            "--ignore-certificate-errors",
+        ] + chromium_args()
+        
         context = chromium.launch_persistent_context(
-
             user_data_dir=profile_path,
-
+            executable_path=executable_path, # Sử dụng Chrome thật nếu tìm thấy
             headless=False,
-
             proxy=proxy_config,
-
-            args=chromium_args(),
-
+            args=launch_args,
+            ignore_default_args=["--enable-automation"], # Ép buộc xóa bỏ thông báo tự động
             user_agent=fingerprint.get("user_agent"),
-
             viewport={
                 "width": width,
                 "height": height
@@ -176,10 +194,23 @@ def launch_browser(profile, bot_mode=False):
 
         if bot_mode:
             print("Bot mode activated. Running traffic bot...")
+            
+            script_content = None
+            if len(profile) > 4 and profile[4]:
+                script_path = profile[4]
+                if os.path.exists(script_path):
+                    try:
+                        with open(script_path, 'r', encoding='utf-8') as f:
+                            script_content = json.load(f)
+                        print(f"Loaded script from: {script_path}")
+                    except Exception as e:
+                        print(f"Error loading script file: {e}")
+            
             try:
-                run_traffic_bot(page)
+                run_traffic_bot(page, script=script_content)
             except Exception as e:
                 print("Traffic Bot Error:", e)
+
         print("Browser started successfully")
 
         def on_close():
