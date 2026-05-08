@@ -10,19 +10,19 @@ def random_sleep(a=1, b=3):
 # SCROLL PAGE
 # ======================
 
-def scroll_page(page):
+def scroll_page(page, scroll_steps=10):
 
     height = page.evaluate("document.body.scrollHeight")
 
     current = 0
 
-    while current < height:
-
-        step = random.randint(300, 800)
-
-        page.mouse.wheel(0, step)
-
-        current += step
+    for _ in range(scroll_steps):
+        if page.is_closed(): break
+        try:
+            delta = random.randint(100, 300)
+            page.mouse.wheel(0, delta)
+            time.sleep(random.uniform(1, 3))
+        except: break
 
         random_sleep(1, 2)
 
@@ -133,13 +133,18 @@ def goto_url(page, url):
 # ======================
 
 def human_type(page, selector, text):
-    element = page.query_selector(selector)
-    if element:
-        element.click()
+    if page.is_closed(): return
+    try:
+        page.wait_for_selector(selector, timeout=5000)
+        page.focus(selector)
         for char in text:
-            page.keyboard.type(char, delay=random.randint(50, 250))
+            if page.is_closed(): break
+            page.keyboard.type(char)
+            time.sleep(random.uniform(0.05, 0.2))
             if random.random() < 0.1: # 10% cơ hội dừng lại một chút như đang nghĩ
                 random_sleep(0.5, 1.5)
+    except Exception as e:
+        print(f"Lỗi human_type: {e}")
 
 # ======================
 # CHECK CAPTCHA
@@ -163,11 +168,22 @@ def check_captcha(page):
             is_captcha = any(ind in page_content for ind in captcha_indicators)
             
         if is_captcha:
-            print("⚠️ CẢNH BÁO: Phát hiện Google CAPTCHA! Vui lòng giải tay trên trình duyệt để tiếp tục.")
-            while any(ind in page.url for ind in captcha_indicators):
-                time.sleep(5)
-            print("✅ CAPTCHA đã được giải. Tiếp tục kịch bản...")
+            print("⚠️ CẢNH BÁO: Phát hiện Google CAPTCHA!")
+            
+            # Thử giải tự động
+            from bot.captcha_solver import solve_recaptcha_v2
+            success = solve_recaptcha_v2(page, current_url)
+            
+            if not success:
+                print("⚠️ Giải tự động thất bại. Vui lòng giải tay trên trình duyệt để tiếp tục.")
+                while any(ind in page.url for ind in captcha_indicators):
+                    time.sleep(5)
+                print("✅ CAPTCHA đã được giải tay. Tiếp tục kịch bản...")
+            else:
+                print("✅ Đã vượt qua CAPTCHA tự động!")
+                
             return True
+
     except:
         pass
     return False

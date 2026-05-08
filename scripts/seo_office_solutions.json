@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "giải pháp in ấn tiết kiệm cho văn phòng"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 250},
+    {"action": "scroll", "steps": 20},
+    {"action": "click_internal", "pattern": "tin-tuc"},
+    {"action": "wait", "duration": 30}
+  ]
+}

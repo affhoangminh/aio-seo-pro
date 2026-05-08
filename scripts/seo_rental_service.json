@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "cho thuê máy photocopy nhattienthanh.com"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 200},
+    {"action": "scroll", "steps": 12},
+    {"action": "click_internal", "pattern": "dich-vu"},
+    {"action": "wait", "duration": 90}
+  ]
+}

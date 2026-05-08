@@ -42,6 +42,21 @@ def init_db():
     )
     """)
 
+    # schedules table
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS schedules (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        profile_id INTEGER,
+        start_date TEXT,
+        start_time TEXT,
+        duration_days INTEGER,
+        is_active INTEGER DEFAULT 1,
+        scripts_json TEXT,
+        run_mode TEXT DEFAULT 'Traffic Bot'
+    )
+    """)
+
     conn.commit()
     conn.close()
 
@@ -169,3 +184,50 @@ def get_profile(profile_id):
     conn.close()
 
     return row
+
+# ==========================
+# SCHEDULE CRUD
+# ==========================
+
+def add_schedule(name, profile_id, start_date, start_time, duration_days, scripts_json, run_mode="Traffic Bot"):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("""
+    INSERT INTO schedules (name, profile_id, start_date, start_time, duration_days, scripts_json, run_mode)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (name, profile_id, start_date, start_time, duration_days, scripts_json, run_mode))
+    conn.commit()
+    conn.close()
+
+def get_schedules():
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM schedules")
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+def update_schedule(sch_id, name, profile_id, start_date, start_time, duration_days, scripts_json, run_mode):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("""
+    UPDATE schedules
+    SET name=?, profile_id=?, start_date=?, start_time=?, duration_days=?, scripts_json=?, run_mode=?
+    WHERE id=?
+    """, (name, profile_id, start_date, start_time, duration_days, scripts_json, run_mode, sch_id))
+    conn.commit()
+    conn.close()
+
+def delete_schedule(sch_id):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("DELETE FROM schedules WHERE id=?", (sch_id,))
+    conn.commit()
+    conn.close()
+
+def toggle_schedule(sch_id, is_active):
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("UPDATE schedules SET is_active=? WHERE id=?", (is_active, sch_id))
+    conn.commit()
+    conn.close()

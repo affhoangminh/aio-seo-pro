@@ -1,3 +1,5 @@
-2026/03/11-22:14:37.380 384c Reusing MANIFEST D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_4\Default\Site Characteristics Database/MANIFEST-000001
-2026/03/11-22:14:37.392 384c Recovering log #3
-2026/03/11-22:14:37.392 384c Reusing old log D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_4\Default\Site Characteristics Database/000003.log 
+2026/05/09-00:33:05.722 3cc0 Log #3: 1 ops saved to Table #4 OK
+2026/05/09-00:33:05.723 3cc0 Archiving D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_4\Default\Site Characteristics Database/000003.log: OK
+2026/05/09-00:33:05.723 3cc0 Table #4: 1 entries OK
+2026/05/09-00:33:05.729 3cc0 Archiving D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_4\Default\Site Characteristics Database/MANIFEST-000001: OK
+2026/05/09-00:33:05.732 3cc0 **** Repaired leveldb D:\01 Chuongtrinh\Python\Gpm_Clone\browser_profiles\profile_4\Default\Site Characteristics Database; recovered 1 files; 130 bytes. Some data may have been lost. ****

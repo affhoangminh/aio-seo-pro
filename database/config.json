@@ -1,0 +1,8 @@
+{
+    "captcha_service": "Anti-Captcha",
+    "captcha_key": "a1b73359fd4920dcce599edda1773b21",
+    "scheduler_enabled": true,
+    "scheduler_time": "08:00",
+    "scheduler_days": 7,
+    "auto_close_enabled": true
+}

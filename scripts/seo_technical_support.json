@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "tải driver máy photocopy ricoh nhattienthanh"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 120},
+    {"action": "scroll", "steps": 6},
+    {"action": "click_internal", "pattern": "ho-tro"},
+    {"action": "wait", "duration": 40}
+  ]
+}

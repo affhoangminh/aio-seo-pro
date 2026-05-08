@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "Nhất Tiến Thành Photocopy"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 120},
+    {"action": "click_internal", "pattern": "gioi-thieu"},
+    {"action": "scroll", "steps": 5},
+    {"action": "wait", "duration": 30}
+  ]
+}

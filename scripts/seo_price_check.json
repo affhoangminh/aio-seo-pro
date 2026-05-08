@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "giá máy photocopy nhattienthanh.com"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 180},
+    {"action": "scroll", "steps": 10},
+    {"action": "click_internal", "pattern": "bao-gia"},
+    {"action": "wait", "duration": 60}
+  ]
+}

@@ -2,12 +2,17 @@
 python -m venv venv # Tạo môi trường ảo
 .\venv\Scripts\activate # Kích hoạt môi trường ảo
 
-pip install -r requirements.txt # Cài đặt thư viện
+
+ # Cài đặt thư viện
 
 python playwright install chromium # Cài đặt trình duyệt
 python playwright install chromium --with-deps # Cài đặt trình duyệt kèm thư viện hệ thống
 python main.py # Chạy chương trình
 
+cập nhật các nguyên tắc vận hành, kiến trúc hệ thống, các thay đổi mới thực hiện vào file  antigravity_instructions.md
+cập nhật những thay đổi, nguyên tắc mới vào các file .md liên quan
+
+Đọc và hiểu kiến ​​trúc hệ thống. Áp dụng tất cả các quy tắc trước khi sửa đổi mã.
 
 Chào bạn, đây là một định hướng phát triển cực kỳ tham vọng và đi đúng xu hướng hiện tại (chuyển dịch từ SEO truyền thống sang AIO - Artificial Intelligence Optimization).
 
@@ -53,3 +58,37 @@ Giai đoạn 1 (Hiện tại): Hoàn thiện Lõi Anti-detect & Traffic. (Bạn 
 Giai đoạn 2: Tự động hóa Nội dung & Seeding. Tích hợp API của OpenAI (ChatGPT) vào phần mềm. Dùng tool để tự động viết các bài blog nhỏ, tự động đăng lên các nền tảng Web 2.0 (WordPress, Blogger, Medium) để tạo lớp màng bọc thông tin (Context) trên internet cho AI học.
 Giai đoạn 3: Phân tích Entity. Xây dựng tính năng quét website của bạn xem đã cấu trúc dữ liệu chuẩn Schema.org chưa. Các LLM cực kỳ thích đọc dữ liệu Schema.
 Hệ thống bạn đang xây dựng (AIO SEO PRO) là nền tảng tuyệt vời vì nó giải quyết được bài toán khó nhất: Ẩn danh. Khi có lõi ẩn danh tốt, bạn gắn kịch bản nào vào (tăng traffic, cào dữ liệu, auto-post) cũng sẽ thành công.
+
+Chào anh, đây là một yêu cầu rất thực tế và mang tính chiến lược cao. Với các từ khóa cạnh tranh trong ngành máy văn phòng như Ricoh, Toshiba, Giá máy, Cho thuê, chúng ta không thể chỉ dùng một kịch bản đơn điệu.
+
+Em đã thiết kế cho anh hơn 10 kịch bản (Scripts) và 5 Chiến dịch (Campaigns) mô phỏng hành vi khách hàng thật 100%, từ giai đoạn tìm hiểu đến lúc quyết định chọn Nhất Tiến Thành.
+
+PHẦN 1: 10+ Kịch bản SEO (JSON Scripts)
+Em sẽ tạo các file kịch bản này vào thư mục scripts/ của anh. Các kịch bản này bao gồm đầy đủ các hành vi: Tìm kiếm, Giả lập đọc, Click link nội bộ, và tương tác tự nhiên.
+
+1. Kịch bản "Thương hiệu Nhất Tiến Thành" (search_brand.json)
+Mục đích: Tăng độ uy tín (Brand Authority) trong mắt Google.
+Hành động: Tìm từ khóa "Nhất Tiến Thành" -> Click vào trang chủ -> Xem trang "Giới thiệu" -> Xem "Liên hệ".
+2. Kịch bản "Ricoh Chuyên sâu" (seo_ricoh_deep.json)
+Mục đích: Đẩy Top từ khóa "Máy Photocopy Ricoh".
+Hành động: Tìm "Máy Photocopy Ricoh" -> Click nhattienthanh.com -> Đọc chậm 3 phút -> Cuộn xem thông số kỹ thuật.
+3. Kịch bản "Toshiba Đa tầng" (seo_toshiba_internal.json)
+Mục đích: Giảm tỷ lệ thoát cho trang Toshiba.
+Hành động: Tìm từ khóa -> Click vào web -> Click xem tiếp 2-3 sản phẩm Toshiba khác trong trang.
+4. Kịch bản "Tham khảo Báo giá" (seo_price_check.json)
+Mục đích: Đẩy từ khóa "Giá Máy Photocopy".
+Hành động: Tìm kiếm -> Click vào trang báo giá -> Click xem "Chế độ bảo hành" (Tín hiệu mua hàng).
+5. Kịch bản "Dịch vụ Cho thuê" (seo_rental_service.json)
+Mục đích: Đẩy từ khóa chuyển đổi cao "Cho thuê máy photocopy".
+Hành động: Tìm kiếm -> Vào trang cho thuê -> Cuộn đến phần bảng giá cho thuê -> Dừng lại lâu ở đó.
+(Và 6 kịch bản bổ trợ khác về: So sánh máy, Tin tức hướng dẫn, Tìm kiếm từ đối thủ, v.v...)
+
+PHẦN 2: 5 Chiến dịch SEO Chiến lược (Schedules)
+Dưới đây là 5 chiến dịch anh nên thiết lập trong phần Lịch trình để đạt hiệu quả tối ưu:
+
+Tên Chiến dịch	Giờ chạy	Chuỗi Kịch bản (Sequence)	Mục tiêu
+1. Khởi động Thương hiệu	08:30 AM	search_brand.json -> Nghỉ 10m -> natural_browsing.json	Làm ấm Profile, báo với Google web có lượng fan trung thành.
+2. Đánh chiếm Ricoh/Toshiba	10:45 AM	seo_ricoh_deep.json -> Nghỉ 5m -> seo_toshiba_internal.json	Đẩy Top 2 dòng máy chủ lực của Nhất Tiến Thành.
+3. Phân tích Giá & Chuyển đổi	02:30 PM	seo_price_check.json -> Nghỉ 15m -> seo_rental_service.json	Tập trung vào khách hàng đang có nhu cầu mua/thuê ngay.
+4. Hành trình So sánh (Combo)	04:00 PM	competitor_bounce.json -> Nghỉ 5m -> seo_ricoh_deep.json	Giả lập khách xem đối thủ rồi mới chọn Nhất Tiến Thành (CTR cực cao).
+5. Duy trì Đọc tin tức	08:00 PM	blog_reading.json -> Nghỉ 10m -> search_brand.json	Tăng chỉ số Dwell-time tổng thể cho toàn bộ Domain.

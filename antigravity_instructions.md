@@ -45,11 +45,19 @@ Hệ thống sử dụng tầng Inject JavaScript (`anti_detect_engine.py`) đ�
 
 ### Quản lý phiên (Session Management)
 
-- **Persistence**: Tự động lưu Cookie khi trình duyệt đóng và nạp lại khi khởi động để duy trì trạng thái đăng nhập.
+- **Persistence**: Tự động lưu Cookie khi trình## 3. Hệ thống Lập lịch & Chiến dịch (Campaign Scheduling)
+- **Kiến trúc tập trung:** Chuyển đổi từ gán kịch bản vào Profile sang quản lý theo Chiến dịch (Schedules). Một chiến dịch bao gồm: Profile thực hiện, Chuỗi kịch bản, Thời gian chạy, và Số ngày duy trì.
+- **Cơ chế Failover (Dự phòng):**
+    - `Specific`: Chạy đúng Profile được chỉ định.
+    - `Random`: Chọn ngẫu nhiên 1 Profile trong danh sách để đa dạng hóa dấu vân tay.
+    - `Fallback`: Nếu Profile chính gặp lỗi Proxy/Network, hệ thống tự động điều phối Profile dự phòng.
+- **Sequence Scripting:** Hỗ trợ chạy nhiều Script nối tiếp nhau trong một phiên. Giữa các Script có thời gian nghỉ (`delay`) tùy chỉnh để mô phỏng hành trình khách hàng phức tạp.
+- **Auto-Cleanup:** Sau khi hoàn thành chuỗi kịch bản, hệ thống phải thực hiện `save_cookies()` và `close_browser()` tự động để giải phóng tài nguyên.
 
-### 4.1. Kỹ thuật giả lập con người (Human Simulation)
-- **Human-like Typing**: Sử dụng hàm `human_type()` để gõ từ khóa từng phím một với tốc độ và khoảng nghỉ ngẫu nhiên, mô phỏng hành vi suy nghĩ khi gõ của người thật.
-- **Modern Pagination**: Hỗ trợ đồng thời cả nút "Next" (đa ngôn ngữ Anh/Việt) và cơ chế **Continuous Scroll** (Cuộn vô tận) mới của Google.
+## 4. Nguyên tắc UI/UX Modern
+- **Card-style Design:** Sử dụng các thẻ (Cards) có viền mỏng và shadow nhẹ thay vì bảng danh sách thô sơ.
+- **Interactive Feedback:** Mọi hành động (Lưu, Chạy, Xóa) phải có phản hồi thị giác (Hover effects, Progress indicators).
+- **Compact & Clean:** Sử dụng Font-size từ 11px - 13px, viết tắt đơn vị (ví dụ: 'm' thay cho 'phút') để giao diện gọn gàng nhưng vẫn đủ thông tin.
 - **Captcha Handling**: Cơ chế `check_captcha()` tự động phát hiện màn hình xác minh và tạm dừng kịch bản, chờ người dùng giải tay trên trình duyệt trước khi tự động chạy tiếp.
 
 

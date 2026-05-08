@@ -1,0 +1,11 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "máy photocopy giá rẻ"},
+    {"action": "click_domain", "domain": "chuyenmayphotocopy.com"},
+    {"action": "wait", "duration": 15},
+    {"action": "search_google", "keyword": "máy photocopy Nhất Tiến Thành"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 200},
+    {"action": "click_internal", "pattern": "san-pham"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "so sánh máy photocopy ricoh và toshiba"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 300},
+    {"action": "scroll", "steps": 15},
+    {"action": "click_internal", "pattern": "tin-tuc"},
+    {"action": "wait", "duration": 60}
+  ]
+}

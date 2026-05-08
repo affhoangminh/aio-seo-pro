@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "địa chỉ bán máy photocopy uy tín tphcm"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 180},
+    {"action": "scroll", "steps": 12},
+    {"action": "click_internal", "pattern": "lien-he"},
+    {"action": "wait", "duration": 120}
+  ]
+}

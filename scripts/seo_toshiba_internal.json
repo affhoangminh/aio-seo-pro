@@ -1,0 +1,10 @@
+{
+  "steps": [
+    {"action": "search_google", "keyword": "máy photocopy toshiba nhattienthanh.com"},
+    {"action": "click_domain", "domain": "nhattienthanh.com"},
+    {"action": "simulate_reading", "duration": 150},
+    {"action": "click_internal", "pattern": "san-pham"},
+    {"action": "scroll", "steps": 8},
+    {"action": "wait", "duration": 45}
+  ]
+}

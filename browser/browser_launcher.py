@@ -211,6 +211,23 @@ def launch_browser(profile, bot_mode=False):
             except Exception as e:
                 print("Traffic Bot Error:", e)
 
+            # Tự động đóng sau khi chạy xong kịch bản (nếu bật cấu hình)
+            config_path = "database/config.json"
+            auto_close = True
+            if os.path.exists(config_path):
+                try:
+                    with open(config_path, "r", encoding="utf-8") as f:
+                        config = json.load(f)
+                        auto_close = config.get("auto_close_enabled", True)
+                except: pass
+
+            if auto_close:
+                print("🏁 Kịch bản hoàn tất. Tự động đóng Profile...")
+                save_cookies(profile_id, context)
+                context.close()
+                playwright_inst.stop()
+                return
+
         print("Browser started successfully")
 
         def on_close():
@@ -223,8 +240,9 @@ def launch_browser(profile, bot_mode=False):
             on_close
         )
 
-        # giữ browser chạy
+        # giữ browser chạy nếu không ở chế độ auto-close
         context.wait_for_event("close")
+
 
     except Exception as e:
 
