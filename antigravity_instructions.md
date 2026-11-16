@@ -141,5 +141,31 @@ AI đánh giá dựa trên **Chất lượng dữ liệu** và **Độ uy tín (
 - [ ] Cào dữ liệu (Scraping) đối thủ.
 - [ ] Quét và đánh giá cấu trúc dữ liệu (Schema.org, JSON-LD) của trang web mục tiêu để đảm bảo chuẩn "thức ăn" cho AI.
 
+## 9. Các thay đổi và tối ưu hóa hệ thống gần đây (Tháng 06/2026)
+
+### 9.1. Khắc phục lỗi đa luồng (Cooperative Shutdown)
+- **Vấn đề:** Khi tắt chương trình, luồng chính hoặc luồng dọn dẹp Qt gọi trực tiếp `c.close()` lên các context của luồng worker gây ra lỗi xung đột luồng `Greenlet.switch() returned NULL` và các warning coroutine chưa được await.
+- **Giải pháp:** Chuyển sang mô hình tắt hợp tác. Thêm cờ sự kiện thread-safe `shutdown_event = threading.Event()` vào `browser_pool.py`. Hàm `close_all()` chỉ kích hoạt cờ này. Các luồng worker trong `browser_launcher.py` sẽ tự động thoát vòng lặp chờ và gọi `playwright_inst.stop()` dọn dẹp tài nguyên một cách an toàn trong khối `finally` trên chính luồng của nó.
+
+### 9.2. Sửa lỗi Timeout 30 giây khi mở trình duyệt
+- **Vấn đề:** Lệnh `context.wait_for_event("close")` mặc định có thời gian chờ là 30 giây (30000ms). Nếu người dùng không đóng trình duyệt trong 30 giây, trình duyệt sẽ tự động crash/đóng do ném lỗi TimeoutError.
+- **Giải pháp:** Thay thế bằng một vòng lặp kiểm tra sự kiện đóng với timeout ngắn (1000ms) kết hợp kiểm tra trạng thái tắt ứng dụng (`is_shutdown()`). Trình duyệt sẽ luôn mở ổn định cho đến khi người dùng chủ động đóng.
+
+### 9.3. Đồng bộ Cookie & Xử lý ngoại lệ
+- **Cookie:** Sửa lỗi sai lệch tên file cookie giữa lưu và tải (lưu dùng định dạng `cookies_{profile_id}.json` nhưng tải lại tìm `{profile_id}.json`). Cả hai đã được đồng bộ sử dụng `cookies_{profile_id}.json`.
+- **Ngoại lệ:** Bỏ qua lỗi context đã đóng khi gọi `context.cookies()` trong sự kiện close vì trình duyệt persistent context đã tự lưu cache và session hoàn chỉnh vào đĩa. Đồng thời, đăng ký thêm sự kiện lưu cookie khi đóng tab/page để backup cookie khi context vẫn còn sống.
+
+### 9.4. Kịch bản gõ chữ mô phỏng người thật (`type_text`)
+- **Bộ máy:** Thêm hành động `"type_text"` hỗ trợ tìm kiếm selector, gõ từng ký tự với tốc độ biến thiên ngẫu nhiên và nhấn `Enter`. Nếu `selector` trống, bot tự động gõ trực tiếp vào vị trí con trỏ/focus hiện tại của trang (rất hữu ích cho các trang tự động focus như Claude, ChatGPT hay Google).
+- **Giao diện soạn thảo:** Tích hợp trực quan hành động **"Gõ văn bản & Enter"** vào `ScriptEditorDialog` giúp người dùng cấu hình dễ dàng mà không cần viết JSON.
+
+### 9.5. Tự động phát hiện và tạm dừng chờ giải xác minh bảo mật (Cloudflare/DDoS)
+- Thêm bộ lọc nhận diện các trang bảo vệ của Cloudflare, DDoS, Akamai trong hàm `check_captcha()`.
+- Khi phát hiện màn hình xác minh, kịch bản tự động dừng, hướng dẫn người dùng giải tay hoặc chờ hệ thống xác minh. Ngay sau khi giải xong và nội dung bảo vệ biến mất, bot tự động tiếp tục kịch bản.
+
+### 9.6. Sửa lỗi Unicode Encode trên Windows Console
+- Cấu hình lại mã hóa đầu ra tiêu chuẩn (`sys.stdout` và `sys.stderr`) thành `UTF-8` tại điểm đầu chương trình (`main.py` và các script chạy thử) để triệt tiêu lỗi biên dịch `'charmap' codec can't encode character` khi in các biểu tượng emoji ra terminal Windows.
+
 ---
-*Cập nhật lần cuối: 08/05/2026 bởi Antigravity*
+*Cập nhật lần cuối: 09/06/2026 bởi Antigravity*
+

@@ -157,31 +157,56 @@ def check_captcha(page):
         "recaptcha"
     ]
     
+    security_indicators = [
+        "performing security verification",
+        "uses a security service to protect against malicious",
+        "verify you are not a bot",
+        "checking your browser",
+        "cloudflare"
+    ]
+    
     try:
         current_url = page.url
-        # Kiểm tra qua URL trước cho nhanh
         is_captcha = any(ind in current_url for ind in captcha_indicators)
+        is_security = False
         
+        page_content = ""
         if not is_captcha:
-            # Nếu URL không rõ, kiểm tra nội dung trang
             page_content = page.content().lower()
             is_captcha = any(ind in page_content for ind in captcha_indicators)
+            is_security = any(ind in page_content for ind in security_indicators)
             
-        if is_captcha:
-            print("⚠️ CẢNH BÁO: Phát hiện Google CAPTCHA!")
+        if is_captcha or is_security:
+            print("⚠️ CẢNH BÁO: Phát hiện màn hình Xác minh Bảo mật / CAPTCHA!")
             
-            # Thử giải tự động
-            from bot.captcha_solver import solve_recaptcha_v2
-            success = solve_recaptcha_v2(page, current_url)
+            # Chỉ tự động giải nếu là Google CAPTCHA thông thường
+            if is_captcha and not is_security:
+                try:
+                    from bot.captcha_solver import solve_recaptcha_v2
+                    success = solve_recaptcha_v2(page, current_url)
+                    if success:
+                        print("✅ Đã vượt qua CAPTCHA tự động!")
+                        return True
+                except:
+                    pass
             
-            if not success:
-                print("⚠️ Giải tự động thất bại. Vui lòng giải tay trên trình duyệt để tiếp tục.")
-                while any(ind in page.url for ind in captcha_indicators):
-                    time.sleep(5)
-                print("✅ CAPTCHA đã được giải tay. Tiếp tục kịch bản...")
-            else:
-                print("✅ Đã vượt qua CAPTCHA tự động!")
+            print("⚠️ Vui lòng giải xác minh bảo mật (hoặc chờ trình duyệt tự động xác minh) để tiếp tục...")
+            
+            while True:
+                time.sleep(3)
+                if page.is_closed():
+                    break
+                url_now = page.url
+                if any(ind in url_now for ind in captcha_indicators):
+                    continue
+                content_now = page.content().lower()
+                if any(ind in content_now for ind in captcha_indicators):
+                    continue
+                if any(ind in content_now for ind in security_indicators):
+                    continue
+                break
                 
+            print("✅ Xác minh bảo mật đã hoàn thành. Tiếp tục kịch bản...")
             return True
 
     except:

@@ -1,0 +1,19 @@
+[
+    {
+        "type": "goto",
+        "url": "https://claude.ai/new"
+    },
+    {
+        "seconds": 60,
+        "type": "wait"
+    },
+    {
+        "selector": "",
+        "text": "Thời thiết hôm nay",
+        "type": "type_text"
+    },
+    {
+        "seconds": 60,
+        "type": "wait"
+    }
+]

@@ -1,10 +1,11 @@
-
 import json
 import random
+import time
 from bot.page_actions import (
     random_sleep, scroll_page, simulate_reading, 
     simulate_bounce, click_random_internal, 
-    goto_url, search_google, find_and_click_domain
+    goto_url, search_google, find_and_click_domain,
+    human_type
 )
 from bot.mouse_ai import random_mouse_moves
 
@@ -70,6 +71,23 @@ def execute_script(page, script_data):
 
             elif action == "mouse_move":
                 random_mouse_moves(page)
+
+            elif action == "type_text":
+                selector = step.get("selector")
+                text = step.get("text")
+                if text:
+                    if selector:
+                        human_type(page, selector, text)
+                    else:
+                        # Gõ trực tiếp vào vị trí con trỏ/focus hiện tại
+                        for char in text:
+                            if page.is_closed(): break
+                            page.keyboard.type(char)
+                            time.sleep(random.uniform(0.05, 0.2))
+                            if random.random() < 0.1:
+                                random_sleep(0.5, 1.5)
+                    random_sleep(0.5, 1.5)
+                    page.keyboard.press("Enter")
 
             elif action == "wait":
                 sec = step.get("duration") or step.get("seconds", 5)

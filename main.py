@@ -1,4 +1,15 @@
 import sys
+import io
+
+# Reconfigure stdout and stderr to UTF-8 to prevent charmap codec errors on Windows
+if sys.platform.startswith("win"):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except AttributeError:
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 import threading
 
 from PySide6.QtWidgets import QApplication

@@ -3,7 +3,7 @@ import os
 import time
 
 from browser.playwright_manager import start_playwright
-from browser.browser_pool import register_context
+from browser.browser_pool import register_context, is_shutdown
 
 from browser.anti_detect_engine import inject
 from browser.network_optimizer import chromium_args
@@ -118,6 +118,7 @@ def launch_browser(profile, bot_mode=False):
     print("Proxy raw:", proxy_string)
     print("Proxy config:", proxy_config)
 
+    playwright_inst = None
     try:
 
         playwright_inst, chromium = start_playwright()
@@ -225,25 +226,33 @@ def launch_browser(profile, bot_mode=False):
                 print("🏁 Kịch bản hoàn tất. Tự động đóng Profile...")
                 save_cookies(profile_id, context)
                 context.close()
-                playwright_inst.stop()
                 return
 
         print("Browser started successfully")
 
-        def on_close():
-            save_cookies(profile_id, context)
-            playwright_inst.stop()
+        # Lưu cookie khi đóng page/tab
+        context.on("page", lambda p: p.on("close", lambda pg: save_cookies(profile_id, context)))
+        if context.pages:
+            for p in context.pages:
+                p.on("close", lambda pg: save_cookies(profile_id, context))
 
-        # khi browser đóng → save cookies
-        context.on(
-            "close",
-            on_close
-        )
-
-        # giữ browser chạy nếu không ở chế độ auto-close
-        context.wait_for_event("close")
-
+        # giữ browser chạy nếu không ở chế độ auto-close và không có tín hiệu tắt ứng dụng
+        while not is_shutdown():
+            try:
+                context.wait_for_event("close", timeout=1000)
+                break
+            except Exception as e:
+                if "timeout" in str(e).lower():
+                    continue
+                break
 
     except Exception as e:
 
         print("Browser launch error:", e)
+
+    finally:
+        if playwright_inst:
+            try:
+                playwright_inst.stop()
+            except Exception as pe:
+                print("Error stopping playwright instance:", pe)

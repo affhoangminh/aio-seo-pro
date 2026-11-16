@@ -16,16 +16,19 @@ def save_cookies(profile_id, context):
             json.dump(cookies, f)
             
     except Exception as e:
-        print(f"Could not save cookies for profile {profile_id}: {e}")
+        if "closed" in str(e).lower():
+            pass
+        else:
+            print(f"Could not save cookies for profile {profile_id}: {e}")
 
 def load_cookies(profile_id, context):
 
-    path = f"{COOKIE_DIR}/{profile_id}.json"
+    path = os.path.join(COOKIE_DIR, f"cookies_{profile_id}.json")
 
     if not os.path.exists(path):
         return
 
-    with open(path,"r") as f:
+    with open(path, "r") as f:
 
         cookies = json.load(f)
 

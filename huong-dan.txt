@@ -1,13 +1,11 @@
 ### Khởi tạo và Kích hoạt
 python -m venv venv # Tạo môi trường ảo
 .\venv\Scripts\activate # Kích hoạt môi trường ảo
-
+python main.py # Chạy chương trình
 
  # Cài đặt thư viện
-
 python playwright install chromium # Cài đặt trình duyệt
 python playwright install chromium --with-deps # Cài đặt trình duyệt kèm thư viện hệ thống
-python main.py # Chạy chương trình
 
 cập nhật các nguyên tắc vận hành, kiến trúc hệ thống, các thay đổi mới thực hiện vào file  antigravity_instructions.md
 cập nhật những thay đổi, nguyên tắc mới vào các file .md liên quan
@@ -66,7 +64,7 @@ Em đã thiết kế cho anh hơn 10 kịch bản (Scripts) và 5 Chiến dịch
 PHẦN 1: 10+ Kịch bản SEO (JSON Scripts)
 Em sẽ tạo các file kịch bản này vào thư mục scripts/ của anh. Các kịch bản này bao gồm đầy đủ các hành vi: Tìm kiếm, Giả lập đọc, Click link nội bộ, và tương tác tự nhiên.
 
-1. Kịch bản "Thương hiệu Nhất Tiến Thành" (search_brand.json)
+1. Kịch bản "Thương hiệu Nhất Tiến Thanh" (search_brand.json)
 Mục đích: Tăng độ uy tín (Brand Authority) trong mắt Google.
 Hành động: Tìm từ khóa "Nhất Tiến Thành" -> Click vào trang chủ -> Xem trang "Giới thiệu" -> Xem "Liên hệ".
 2. Kịch bản "Ricoh Chuyên sâu" (seo_ricoh_deep.json)

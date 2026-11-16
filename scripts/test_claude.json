@@ -1,0 +1,19 @@
+[
+    {
+        "type": "goto",
+        "url": "https://claude.ai/new"
+    },
+    {
+        "type": "wait",
+        "seconds": 5
+    },
+    {
+        "type": "type_text",
+        "selector": "div[contenteditable='true']",
+        "text": "Hello Claude, please tell me a joke."
+    },
+    {
+        "type": "wait",
+        "seconds": 10
+    }
+]

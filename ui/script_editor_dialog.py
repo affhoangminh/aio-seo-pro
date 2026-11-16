@@ -14,6 +14,7 @@ COMMAND_MAP = {
     "goto": "Truy cập URL",
     "search_google": "Tìm kiếm Google",
     "click_domain": "Tìm & Click Domain",
+    "type_text": "Gõ văn bản & Enter",
     "simulate_reading": "Giả lập đọc (Dwell Time)",
     "scroll": "Cuộn trang ngẫu nhiên",
     "click_internal": "Click link nội bộ",
@@ -82,6 +83,9 @@ class StepEditorDialog(QDialog):
         elif cmd_type == "simulate_reading":
             self.add_field("min", "Thời gian tối thiểu (giây):", str(self.step.get("min", 60)))
             self.add_field("max", "Thời gian tối đa (giây):", str(self.step.get("max", 180)))
+        elif cmd_type == "type_text":
+            self.add_field("selector", "Bộ chọn CSS (Selector):", self.step.get("selector", ""))
+            self.add_field("text", "Nội dung cần gõ:", self.step.get("text", ""))
         elif cmd_type == "click_internal":
             self.add_field("count", "Số lần click link nội bộ:", str(self.step.get("count", 2)))
         elif cmd_type == "wait":

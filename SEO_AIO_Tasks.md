@@ -30,10 +30,6 @@ Dưới đây là danh sách chi tiết các công việc cần thực hiện đ
 - [x] **Captcha Detection**: Tự động phát hiện và tạm dừng chờ giải tay.
 - [ ] Hỗ trợ cấu hình tích hợp API xoay IP cho Proxy Dân cư (Residential Proxy).
 
-
-
----
-
 ## GIAI ĐOẠN 2: Tự động hóa Nội dung & Seeding (Tối ưu AIO)
 **Mục tiêu:** Phủ sóng thương hiệu để huấn luyện AI (ChatGPT, Gemini).
 
